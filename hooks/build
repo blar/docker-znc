@@ -1,3 +1,3 @@
 #!/bin/sh
 # https://docs.docker.com/docker-cloud/builds/advanced/
-make znc-amd64-build
+make amd64-build

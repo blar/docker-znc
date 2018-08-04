@@ -1,5 +1,6 @@
 ALPINE_VERSION := 3.8
 BUILD_DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+VCS_URL := $(shell git config --get remote.origin.url)
 VCS_REF := $(shell git rev-parse --short HEAD)
 ZNC_VERSION := 1.7.1
 IMAGE_TAG := $(ZNC_VERSION)
@@ -13,6 +14,7 @@ amd64-build:
 	    --build-arg ALPINE_VERSION=$(ALPINE_VERSION) \
 	    --build-arg ARCH=amd64 \
 	    --build-arg BUILD_DATE=$(BUILD_DATE) \
+	    --build-arg VCS_URL=$(VCS_URL) \
 	    --build-arg VCS_REF=$(VCS_REF) \
 	    --build-arg ZNC_VERSION=$(ZNC_VERSION) \
 	    --tag $(IMAGE_NAME)-amd64 .
@@ -25,6 +27,7 @@ arm32v6-build:
 	    --build-arg ALPINE_VERSION=$(ALPINE_VERSION) \
 	    --build-arg ARCH=arm32v6 \
 	    --build-arg BUILD_DATE=$(BUILD_DATE) \
+	    --build-arg VCS_URL=$(VCS_URL) \
 	    --build-arg VCS_REF=$(VCS_REF) \
 	    --build-arg ZNC_VERSION=$(ZNC_VERSION) \
 	    --tag $(IMAGE_NAME)-arm32v6 .

@@ -1,14 +1,3 @@
 #!/bin/sh
 # https://docs.docker.com/docker-cloud/builds/advanced/
-BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-VCS_REF=$(git rev-parse --short HEAD)
-ALPINE_VERSION=3.8
-ZNC_VERSION=1.7.1
-
-docker build \
-    --build-arg ALPINE_VERSION=$ALPINE_VERSION \
-    --build-arg ARCH=amd64 \
-    --build-arg BUILD_DATE=$BUILD_DATE \
-    --build-arg VCS_REF=$VCS_REF \
-    --build-arg ZNC_VERSION=$ZNC_VERSION \
-    --tag $IMAGE_NAME-amd64 .
+make znc-amd64-build

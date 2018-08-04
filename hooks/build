@@ -11,7 +11,7 @@ docker build \
     --build-arg BUILD_DATE=$BUILD_DATE \
     --build-arg VCS_REF=$VCS_REF \
     --build-arg ZNC_VERSION=$ZNC_VERSION \
-    --tag foobox/znc:$IMAGE_NAME-amd64 .
+    --tag $IMAGE_NAME-amd64 .
 
 docker build \
     --build-arg ALPINE_VERSION=$ALPINE_VERSION \
@@ -19,4 +19,4 @@ docker build \
     --build-arg BUILD_DATE=$BUILD_DATE \
     --build-arg VCS_REF=$VCS_REF \
     --build-arg ZNC_VERSION=$ZNC_VERSION \
-    --tag foobox/znc:$IMAGE_NAME-arm32v6 .
+    --tag $IMAGE_NAME-arm32v6 .

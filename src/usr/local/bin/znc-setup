@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+apk add --no-cache znc=~$ZNC_VERSION
+chown -R znc: /var/lib/znc

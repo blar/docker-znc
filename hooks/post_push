@@ -1,0 +1,6 @@
+#!/bin/sh
+
+docker manifest create $IMAGE_NAME $IMAGE_NAME-amd64 $IMAGE_NAME-arm32v6
+docker manifest annotate $IMAGE_NAME $IMAGE_NAMEamd64 --os linux --arch amd64
+docker manifest annotate $IMAGE_NAME $IMAGE_NAME-arm32v6 --os linux --arch arm --variant v6
+docker manifest push $IMAGE_NAME

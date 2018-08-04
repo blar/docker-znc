@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+    znc:
+        image: foobox/znc:1.7.1
+        environment:
+            ZNC_ADMIN_PASSWORD: $ZNC_ADMIN_PASSWORD
+        ports:
+            - 6667:6667/tcp
+        volumes:
+            - znc-config:/var/lib/znc
+        labels:
+            { if $TRAEFIK_ENABLE }
+            traefik.enable: $TRAEFIK_ENABLE
+            traefik.port: "8080"
+            traefik.frontend.rule: $TRAEFIK_HOST
+            traefik.frontend.headers.SSLRedirect: $TRAEFIK_HTTPS_REDIRECT
+            traefik.frontend.headers.STSSeconds: "315360000"
+            traefik.frontend.headers.contentTypeNosniff: true
+            traefik.frontend.headers.referrerPolicy: origin-when-cross-origin
+            traefik.frontend.headers.frameDeny: true
+            { end }
+

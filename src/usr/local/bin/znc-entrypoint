@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -n "$ZNC_ADMIN_PASSWORD" ]; then
+   ZNC_ADMIN_PASSWORD_SALT="$(znc-salt)"
+   ZNC_ADMIN_PASSWORD_HASH="$(znc-password $ZNC_ADMIN_PASSWORD $ZNC_ADMIN_PASSWORD_SALT)"
+   sed -i -e "s#\$ZNC_ADMIN_PASSWORD_HASH#$ZNC_ADMIN_PASSWORD_HASH#g" /var/lib/znc/configs/znc.conf
+   sed -i -e "s#\$ZNC_ADMIN_PASSWORD_SALT#$ZNC_ADMIN_PASSWORD_SALT#g" /var/lib/znc/configs/znc.conf
+fi
+
+exec "$@"

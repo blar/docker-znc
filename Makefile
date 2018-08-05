@@ -1,21 +1,26 @@
-ALPINE_VERSION := 3.8
 BUILD_DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 VCS_URL := $(shell git config --get remote.origin.url)
 VCS_REF := $(shell git rev-parse --short HEAD)
-ZNC_VERSION := 1.7.1
-IMAGE_TAG := $(ZNC_VERSION)
-# IMAGE_NAME := foobox/$(shell basename $(shell pwd)):$(IMAGE_TAG)
-IMAGE_NAME := foobox/znc:$(IMAGE_TAG)
 
-all: amd64-build arm32v6-build
+ALPINE_VERSION := 3.8
+ZNC_VERSION := 1.7
+IMAGE_TAG := $(ZNC_VERSION)
+IMAGE_NAME ?= foobox/znc:$(IMAGE_TAG)
+
+all: build
+
+build: amd64-build arm32v6-build
+
+push: amd64-push arm32v6-push
 
 amd64-build:
 	docker build \
-	    --build-arg ALPINE_VERSION=$(ALPINE_VERSION) \
-	    --build-arg ARCH=amd64 \
+		--force-rm \
 	    --build-arg BUILD_DATE=$(BUILD_DATE) \
 	    --build-arg VCS_URL=$(VCS_URL) \
 	    --build-arg VCS_REF=$(VCS_REF) \
+	    --build-arg ARCH=amd64 \
+	    --build-arg ALPINE_VERSION=$(ALPINE_VERSION) \
 	    --build-arg ZNC_VERSION=$(ZNC_VERSION) \
 	    --tag $(IMAGE_NAME)-amd64 .
 
@@ -24,11 +29,12 @@ amd64-push: amd64-build
 
 arm32v6-build:
 	docker build \
-	    --build-arg ALPINE_VERSION=$(ALPINE_VERSION) \
-	    --build-arg ARCH=arm32v6 \
+		--force-rm \
 	    --build-arg BUILD_DATE=$(BUILD_DATE) \
 	    --build-arg VCS_URL=$(VCS_URL) \
 	    --build-arg VCS_REF=$(VCS_REF) \
+	    --build-arg ARCH=arm32v6 \
+	    --build-arg ALPINE_VERSION=$(ALPINE_VERSION) \
 	    --build-arg ZNC_VERSION=$(ZNC_VERSION) \
 	    --tag $(IMAGE_NAME)-arm32v6 .
 
